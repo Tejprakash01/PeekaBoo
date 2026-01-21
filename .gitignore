@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+dist/
+build/
+*.spec
+.env
+.idea/
+.vscode/
+peekaboo_error.log
