@@ -89,6 +89,7 @@ python main.py
 After running:
 
 * Tray icon appears in system tray
+* Icon will appear in arrow button near wifi and bluetooth
 * Right-click tray icon to access menu
 
 ---
@@ -203,6 +204,110 @@ dist\main.exe
 
 * Tray icon should appear
 * No console window will open
+
+---
+
+## Future Scope: Linux & macOS Support
+
+Peekaboo is currently optimized and tested on Windows. Adding full support for Linux and macOS is a planned future enhancement. Below are the key areas that need changes.
+
+### 1. Tray Icon (pystray backend)
+
+* Windows uses pystray win32 backend.
+* Linux uses GTK or AppIndicator backend.
+* macOS uses Cocoa backend.
+
+Planned change:
+
+* Detect OS using platform.system()
+* Let pystray auto-select backend per OS.
+
+### 2. Notifications
+
+Current:
+
+* Uses win10toast and plyer on Windows.
+
+For Linux:
+
+* Use notify-send (libnotify)
+* Dependency: libnotify-bin
+
+For macOS:
+
+* Use osascript notifications
+
+Planned change:
+
+* Unified OS-based dispatcher in notify.py
+
+### 3. Camera Backend (OpenCV)
+
+Current:
+
+* Uses default Windows backend.
+
+For Linux:
+
+* Use V4L2 backend
+* May require: sudo apt install v4l-utils
+
+For macOS:
+
+* Use AVFoundation backend
+
+Planned change:
+
+* Select VideoCapture backend based on OS.
+
+### 4. Face Recognition Dependencies
+
+Issues:
+
+* dlib is hard to compile on Linux and macOS.
+* Apple Silicon needs special wheels.
+
+Planned improvements:
+
+* Provide Docker build
+* Optional lighter models (MediaPipe / OpenCV DNN)
+
+### 5. Build System
+
+Current:
+
+* PyInstaller onefile for Windows.
+
+For Linux:
+
+* Build on Linux target OS.
+
+For macOS:
+
+* Use --windowed and code signing.
+
+Planned change:
+
+* Separate build scripts for each OS.
+
+### 6. Settings System
+
+Planned additions:
+
+* settings.json for:
+
+  * Camera index
+  * Detection threshold
+  * Intruder cooldown
+  * Preview default
+
+### 7. Cross-Platform Packaging
+
+Future goals:
+
+* Windows: Inno Setup installer
+* Linux: AppImage or .deb
+* macOS: .dmg bundle
 
 ---
 
