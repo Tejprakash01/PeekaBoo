@@ -137,7 +137,7 @@ def detection_loop(controller):
                 print("[engine] best distance:", best_distance)
 
                 # Authorized face
-                if best_distance < 0.65:
+                if best_distance < 0.50:
                     is_authorized = True
                     label = known_names[best_match_index]
                     color = (0, 255, 0)   # green
